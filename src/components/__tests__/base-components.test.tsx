@@ -218,9 +218,7 @@ describe("Footer Component", () => {
   it("renders footer text and link", () => {
     render(<Footer />);
     expect(
-      screen.getByText(
-        "Template React + TypeScript + Vite + Tailwind CSS + daisyUI",
-      ),
+      screen.getByText(/Feito por.*com muito carinho para meu/i),
     ).toBeInTheDocument();
     const link = screen.getByText("ApenasGabs") as HTMLAnchorElement;
     expect(link.href).toContain("github.com/apenasgabs");
