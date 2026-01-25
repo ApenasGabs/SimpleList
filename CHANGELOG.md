@@ -5,6 +5,12 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## 1.0.0 (2026-01-25)
+
+### ✨ Features
+
+* ✨ implementa ordenação e comportamento de tarefas ([#2](https://github.com/ApenasGabs/SimpleList/issues/2)) ([330d5c3](https://github.com/ApenasGabs/SimpleList/commit/330d5c3d1c41f925a15229944be5caaebea4ea95))
+
 ## [0.2.0](https://github.com/ApenasGabs/ApenasTemplate/compare/v0.1.1...v0.2.0) (2026-01-25)
 
 ### ✨ Features
