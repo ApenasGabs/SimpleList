@@ -1,0 +1,48 @@
+{
+  "required": [
+    {
+      "id": "dbaeumer.vscode-eslint",
+      "name": "ESLint",
+      "description": "Linting e análise de código em tempo real"
+    },
+    {
+      "id": "esbenp.prettier-vscode",
+      "name": "Prettier",
+      "description": "Formatação automática de código"
+    },
+    {
+      "id": "bradlc.vscode-tailwindcss",
+      "name": "Tailwind CSS IntelliSense",
+      "description": "Autocomplete e preview de classes Tailwind CSS"
+    }
+  ],
+  "recommended": [
+    {
+      "id": "dsznajder.es7-react-js-snippets",
+      "name": "ES7+ React/Redux/React-Native snippets",
+      "description": "Snippets produtivos para React e TypeScript"
+    },
+    {
+      "id": "vitest.explorer",
+      "name": "Vitest",
+      "description": "Explorer para executar e debugar testes unitários"
+    },
+    {
+      "id": "ms-playwright.playwright",
+      "name": "Playwright Test for VSCode",
+      "description": "Debug interativo e execução de testes E2E"
+    },
+    {
+      "id": "eamodio.gitlens",
+      "name": "GitLens",
+      "description": "Análise de Git integrada e blame"
+    }
+  ],
+  "optional": [
+    {
+      "id": "GitHub.copilot",
+      "name": "GitHub Copilot",
+      "description": "Assistência com IA para escrita de código (pago)"
+    }
+  ]
+}
