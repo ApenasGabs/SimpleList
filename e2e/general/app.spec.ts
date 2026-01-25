@@ -1,56 +1,46 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("SimpleList - App", () => {
-  test.beforeEach(async ({ page }) => {
+test.describe("App - Page Load", () => {
+  test("should load the app successfully", async ({ page }) => {
     await page.goto("/");
-    await page.evaluate(() => localStorage.clear());
-    await page.reload();
+
+    // Verificar se o título está visível
+    const title = page.getByTestId("main-title");
+    await expect(title).toBeVisible();
+    await expect(title).toContainText("Vite + React + TypeScript");
   });
 
-  test("deve carregar a aplicação com sucesso", async ({ page }) => {
-    // Verificar se o navbar está visível
-    const navbar = page.getByTestId("navbar-title");
-    await expect(navbar).toBeVisible();
-    await expect(navbar).toContainText("SimpleList");
+  test("should display navbar with correct title", async ({ page }) => {
+    await page.goto("/");
 
-    // Verificar se as abas estão visíveis
-    const tabLists = page.getByTestId("tab-lists");
-    const tabToday = page.getByTestId("tab-today");
-    await expect(tabLists).toBeVisible();
-    await expect(tabToday).toBeVisible();
+    // Verificar navbar
+    const navbarTitle = page.getByTestId("navbar-title");
+    await expect(navbarTitle).toBeVisible();
+    await expect(navbarTitle).toContainText("Apenas Template");
   });
 
-  test("deve exibir lista Inbox por padrão", async ({ page }) => {
-    // Verificar se o input de nova tarefa está visível
-    const input = page.getByTestId("input-new-task");
-    await expect(input).toBeVisible();
-    await expect(input).toHaveAttribute("placeholder", "Adicionar tarefa");
+  test("should display hero section content", async ({ page }) => {
+    await page.goto("/");
 
-    // Verificar se o botão de adicionar está visível
-    const addBtn = page.getByTestId("btn-add-task");
-    await expect(addBtn).toBeVisible();
+    // Verificar se as imagens do Vite e React estão visíveis
+    const viteImg = page.getByTestId("vite-logo");
+    const reactImg = page.getByTestId("react-logo");
+    await expect(viteImg).toBeVisible();
+    await expect(reactImg).toBeVisible();
+
+    // Verificar descrição
+    const description = page.getByTestId("main-description");
+    await expect(description).toBeVisible();
   });
 
-  test("deve exibir estado vazio quando não há tarefas", async ({ page }) => {
-    // Verificar mensagem de estado vazio
-    const emptyState = page.getByTestId("empty-state");
-    await expect(emptyState).toBeVisible();
-    await expect(emptyState).toContainText("Nenhuma tarefa");
-  });
+  test("should display footer", async ({ page }) => {
+    await page.goto("/");
 
-  test("deve alternar entre abas Listas e Hoje", async ({ page }) => {
-    // Clicar na aba "Hoje"
-    const tabToday = page.getByTestId("tab-today");
-    await tabToday.click();
-
-    // Verificar se a aba está ativa
-    await expect(tabToday).toHaveClass(/tab-active/);
-
-    // Voltar para aba "Listas"
-    const tabLists = page.getByTestId("tab-lists");
-    await tabLists.click();
-
-    // Verificar se a aba está ativa
-    await expect(tabLists).toHaveClass(/tab-active/);
+    // Verificar footer
+    const footer = page.locator(".footer");
+    await expect(footer).toBeVisible();
+    await expect(footer).toContainText(
+      "Template React + TypeScript + Vite + Tailwind CSS + daisyUI",
+    );
   });
 });

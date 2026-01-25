@@ -1,62 +1,49 @@
-# SimpleList - Organizador Minimalista de Tarefas
+# 🚀 Apenas Template - React + TypeScript + Vite + Tailwind CSS + daisyUI
 
-Um aplicativo web de gerenciamento de tarefas minimalista e eficiente, focado em simplicidade e produtividade. Organize suas tarefas em listas, defina prioridades, acompanhe datas de vencimento e mantenha o foco no que importa.
+Um template moderno, produtivo e completo para iniciar seus projetos React com tecnologias de ponta. Configurado com TypeScript, Vite, Tailwind CSS, daisyUI, testes, releases automáticas e ferramentas de qualidade de código.
 
-> **Feito com ❤️ para quem valoriza simplicidade e eficiência**
+> **Feito com muito ❤️ e preguiça de fazer tudo do zero**
 
-[![GitHub release](https://img.shields.io/github/v/release/ApenasGabs/SimpleList?style=flat-square)](https://github.com/ApenasGabs/SimpleList/releases)
-[![License](https://img.shields.io/github/license/ApenasGabs/SimpleList?style=flat-square)](./LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/ApenasGabs/ApenasTemplate?style=flat-square)](https://github.com/ApenasGabs/ApenasTemplate/releases)
+[![License](https://img.shields.io/github/license/ApenasGabs/ApenasTemplate?style=flat-square)](./LICENSE)
 
 ## 📚 Documentação
 
-- [🏗️ Arquitetura](./docs/ARCHITECTURE.md) - Estrutura e decisões técnicas
-- [📝 Sistema de Release](./docs/RELEASE.md) - Versionamento automático
+- [🚀 Guia de Configuração](./docs/SETUP.md) - Como configurar o template
+- [📝 Sistema de Release](./docs/RELEASE.md) - Como funciona o versionamento automático
 - [💻 Estrutura do Projeto](#-estrutura-do-projeto) - Organização dos arquivos
-- [📋 Changelog](./CHANGELOG.md) - Histórico de mudanças
 
-## 🎯 Funcionalidades
+## 🎯 Objetivos
 
-### Implementado
+Este template tem como objetivo fornecer uma base sólida e pronta para produção para projetos React, eliminando a necessidade de configurar manualmente:
 
-- **Gerenciamento de Listas** - Crie, edite e delete listas de tarefas
-- **CRUD de Tarefas** - Adicione, edite, marque como completo e delete tarefas
-- **Ordenação Inteligente** - Ordene por data de criação ou alfabeticamente
-- **Inversão de Ordenação** - Clique duas vezes para inverter a ordem (asc/desc)
-- **Sistema de Prioridades** - Defina tarefas como baixa, média ou alta prioridade
-- **Datas de Vencimento** - Atribua datas às tarefas com calendário intuitivo
-- **Vista "Hoje"** - Visualize tarefas de hoje e atrasadas em uma aba dedicada
-- **Badges Visuais** - Indicadores coloridos de status e prioridade
-- **Sistema de Modais** - Confirmações elegantes para ações críticas
-- **Persistência Local** - Dados salvos automaticamente no localStorage
-- **Temas Múltiplos** - 30+ temas do daisyUI disponíveis
-- **Design Responsivo** - Interface adaptável para mobile e desktop
-
-### 🚧 Planejado
-
-- ⬜ **Autenticação** - Login com Google e sincronização entre dispositivos
-- ⬜ **Histórico e Undo** - Desfaça ações e veja histórico de conclusões
-- ⬜ **Configurações** - Preferências de idioma e personalização avançada
-- ⬜ **Compartilhamento** - Compartilhe listas com outras pessoas
-- ⬜ **Notificações** - Lembretes de tarefas próximas ao vencimento
+- ✅ Ambiente de desenvolvimento rápido e reativo (HMR instantâneo)
+- ✅ Tipagem estática completa com TypeScript
+- ✅ Styling elegante com Tailwind CSS + daisyUI
+- ✅ Testes unitários com Vitest
+- ✅ Testes end-to-end com Playwright
+- ✅ Linting e formatação de código com ESLint
+- ✅ **Releases automáticas com Semantic Release**
+- ✅ **Changelog gerado automaticamente**
+- ✅ Build otimizado para produção
+- ✅ Estrutura de projeto bem organizada e escalável
 
 ## 🛠️ Tecnologias Utilizadas
 
 ### Frontend
 
 - **React 19.2.0** - Biblioteca JavaScript para UI reativa
-- **TypeScript 5.9.3** - Tipagem estática completa (zero `any`)
+- **TypeScript 5.9.3** - Tipagem estática e segurança de tipos
 - **Vite 7.2.4** - Build tool ultra-rápido com HMR
 - **Tailwind CSS 4.1.18** - Framework CSS utility-first
-- **daisyUI 5.5.14** - Componentes elegantes e acessíveis
-- **react-day-picker 9.13.0** - Seletor de datas intuitivo
+- **daisyUI 5.5.14** - Componentes elegantes para Tailwind
 
-### Ferramentas de Qualidade
+### Ferramentas de Desenvolvimento
 
-- **Vitest 4.0.18** - Framework de testes unitários (87+ testes)
-- **Playwright 1.58.0** - Testes end-to-end
-- **Testing Library** - Testes focados em comportamento do usuário
-- **ESLint 9.39.1** - Linting com regras rigorosas
-- **Semantic Release** - Versionamento e releases automáticas
+- **Vitest 4.0.18** - Framework de testes unitários
+- **Playwright 1.58.0** - Testes end-to-end em múltiplos navegadores
+- **ESLint 9.39.1** - Linting e análise de código
+- **PostCSS 8.5.6** - Transformações CSS automatizadas
 
 ## 📦 Como Começar
 
@@ -69,10 +56,10 @@ Um aplicativo web de gerenciamento de tarefas minimalista e eficiente, focado em
 
 ```bash
 # Clone o repositório
-git clone https://github.com/ApenasGabs/SimpleList.git
+git clone https://github.com/ApenasGabs/apenasTemplate.git
 
 # Entre na pasta do projeto
-cd SimpleList
+cd apenasTemplate
 
 # Instale as dependências
 npm install
@@ -85,7 +72,7 @@ npm install
 npm run dev
 ```
 
-O navegador abrirá automaticamente em `http://localhost:5173` com hot reload habilitado.
+O navegador abrirá automaticamente em `http://localhost:5173` com HMR habilitado.
 
 ## 📝 Scripts Disponíveis
 
@@ -113,167 +100,152 @@ npm run lint             # Verifica qualidade do código
 npm run lint:fix         # Corrige problemas automaticamente
 ```
 
-## 💻 Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
 ```
-SimpleList/
+apenasTemplate/
+├── e2e/                          # Testes end-to-end
+│   ├── app.spec.ts              # Testes da página
+│   ├── counter.spec.ts          # Testes do contador
+│   ├── features.spec.ts         # Testes das features
+│   ├── advanced.spec.ts         # Testes avançados
+│   └── README.md                # Documentação E2E
+│
 ├── src/
-│   ├── components/          # Componentes React
-│   │   ├── TaskList/       # Lista de tarefas com ordenação
-│   │   ├── TodayView/      # Vista de tarefas de hoje
-│   │   ├── ListManager/    # Gerenciamento de listas
-│   │   ├── DatePicker/     # Seletor de datas
-│   │   ├── DueDateBadge/   # Badge de data de vencimento
-│   │   ├── Modal/          # Sistema de modais
-│   │   ├── ThemeSelector/  # Seletor de temas
-│   │   └── ...             # Componentes base (Button, Input, etc)
-│   │
-│   ├── context/            # Context API (estado global)
-│   │   ├── AppContext.ts   # Definição de tipos
-│   │   ├── AppProvider.tsx # Provider com lógica
-│   │   └── useApp.ts       # Hook customizado
-│   │
-│   ├── App.tsx             # Componente principal
-│   └── main.tsx            # Entry point
+│   ├── __tests__/               # Testes unitários
+│   │   └── example.test.ts
+│   ├── assets/                  # Imagens, fontes, etc.
+│   ├── App.tsx                  # Componente principal
+│   ├── main.tsx                 # Ponto de entrada
+│   └── index.css                # Estilos globais
 │
-├── e2e/                     # Testes end-to-end
-│   ├── components/         # Testes de componentes
-│   ├── general/            # Testes gerais
-│   └── accessibility/      # Testes de acessibilidade
-│
-├── docs/                    # Documentação
-│   ├── ARCHITECTURE.md     # Arquitetura e decisões técnicas
-│   ├── SETUP.md            # Guia de configuração
-│   └── RELEASE.md          # Sistema de releases
-│
-└── dist/                    # Build de produção (gerado)
+├── public/                       # Arquivos estáticos
+├── playwright.config.ts         # Configuração Playwright
+├── tailwind.config.js           # Configuração Tailwind CSS
+├── tsconfig.json                # Configuração TypeScript
+├── vite.config.ts               # Configuração Vite
+└── eslint.config.js             # Configuração ESLint
 ```
 
-## 🧪 Testes e Qualidade
+## 🎨 Recursos Principais
 
-### Cobertura de Testes
+### Tailwind CSS + daisyUI
 
-- **87+ testes unitários** rodando com Vitest
-- **Testes E2E** com Playwright para fluxos críticos
-- **Testing Library** para testes focados em comportamento
-- **localStorage** mockado para isolamento de testes
+Componentes elegantes e prontos para uso:
 
-### Padrões de Código
+- Navbar responsiva
+- Cards estilizados com links
+- Botões e badges
+- Alerts informativos
+- Grid responsivo
+- Temas pré-configurados (light, dark, cupcake)
 
-- **Zero erros de lint** - ESLint configurado com regras rigorosas
-- **TypeScript estrito** - Sem uso de `any` em lugar algum
-- **Arrow functions** - Padrão consistente em todo o código
-- **Componentes daisyUI** - Reutilização máxima de componentes
+### TypeScript
 
-### Executar Testes
+Tipagem completa em todo o projeto para maior segurança e melhor experiência de desenvolvimento.
+
+### Hot Module Replacement (HMR)
+
+Alterações no código são refletidas instantaneamente sem perder o estado da aplicação.
+
+### Testes Completos
+
+- **Vitest**: Testes unitários rápidos e confiáveis
+- **Playwright**: Testes end-to-end em navegadores reais (Chrome, Firefox, Safari, Mobile)
+
+## 🚀 Como Usar Este Template
+
+### 1. Clonar ou usar como template
 
 ```bash
-# Testes unitários
-npm run test                 # Modo watch
-npm run test:coverage        # Com cobertura
-
-# Testes E2E
-npm run e2e                  # Headless
-npm run e2e:ui               # Interface visual
+# Via GitHub (use o botão "Use this template")
+# ou clone normalmente
+git clone https://github.com/ApenasGabs/apenasTemplate.git
 ```
 
-## 🎨 Estado da Aplicação
+### 2. Instalar dependências
 
-### Gerenciamento de Estado
+```bash
+npm install
+```
 
-- **Context API** - Estado global simples e eficiente
-- **localStorage** - Persistência automática dos dados
-- **React Hooks** - useState, useCallback, useEffect
+### 3. Iniciar desenvolvimento
 
-### Estrutura de Dados
+```bash
+npm run dev
+```
+
+### 4. Personalizar
+
+- Edite `src/App.tsx` para suas necessidades
+- Customize cores em `tailwind.config.js`
+- Adicione componentes em `src/`
+- Adicione testes em `src/__tests__/` e `e2e/`
+
+### 5. Build para produção
+
+```bash
+npm run build
+npm run preview  # Testar o build localmente
+```
+
+## 🔧 Personalizações Recomendadas
+
+### Adicionar novos temas daisyUI
+
+Edite `tailwind.config.js`:
+
+```javascript
+daisyui: {
+  themes: ["light", "dark", "cupcake", "bumblebee"],
+}
+```
+
+### Estender Tailwind Theme
+
+Adicione em `tailwind.config.js`:
+
+```javascript
+theme: {
+  extend: {
+    colors: {
+      primary: '#your-color',
+    },
+  },
+}
+```
+
+### Adicionar variáveis de ambiente
+
+Crie `.env` e `.env.local`:
+
+```
+VITE_API_URL=https://api.example.com
+```
+
+Acesse em seus componentes:
 
 ```typescript
-interface List {
-  id: string;
-  title: string;
-  color?: string;
-  createdAt: number;
-  updatedAt: number;
-}
-
-interface Task {
-  id: string;
-  title: string;
-  description?: string;
-  completed: boolean;
-  completedAt?: number;
-  priority?: "low" | "medium" | "high";
-  dueDate?: number;
-  listId: string;
-  createdAt: number;
-  updatedAt: number;
-}
+const apiUrl = import.meta.env.VITE_API_URL
 ```
 
-## 🚀 Roadmap
+## 📚 Documentação e Recursos
 
-### Versão Atual (v1.3.0)
-
-- Gerenciamento completo de listas e tarefas
-- Sistema de prioridades e datas
-- Vista "Hoje" com filtros
-- Ordenação com inversão de direção
-- Modais customizados
-- Persistência local
-
-### Próximas Versões
-
-**v2.0.0 - Sincronização**
-- Firebase Authentication
-- Firestore sync
-- Offline-first com queue de sincronização
-- Resolução de conflitos
-
-**v2.1.0 - Colaboração**
-- Compartilhamento de listas
-- Permissões de usuário
-- Comentários em tarefas
-
-**v3.0.0 - Produtividade**
-- Histórico e undo/redo
-- Estatísticas e insights
-- Notificações e lembretes
-- Subtarefas e checklist
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças seguindo [Conventional Commits](https://www.conventionalcommits.org/)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-### Padrão de Commits
-
-```bash
-feat: ✨ nova funcionalidade
-fix: 🐛 correção de bug
-docs: 📚 documentação
-style: 👌 formatação
-refactor: ♻️ refatoração
-test: 🧪 testes
-chore: 🔧 manutenção
-```
+- [React](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org)
+- [Vite](https://vite.dev)
+- [Tailwind CSS](https://tailwindcss.com)
+- [daisyUI](https://daisyui.com)
+- [Vitest](https://vitest.dev)
+- [Playwright](https://playwright.dev)
+- [ESLint](https://eslint.org)
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
-
-## 🙏 Agradecimentos
-
-- [React](https://react.dev/) - Biblioteca UI
-- [Vite](https://vitejs.dev/) - Build tool incrível
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
-- [daisyUI](https://daisyui.com/) - Componentes elegantes
-- [react-day-picker](https://daypicker.dev/) - Seletor de datas
+Este projeto está sob a licença MIT.
 
 ---
 
-**Desenvolvido com ❤️ por [ApenasGabs](https://github.com/ApenasGabs)**
+**Desenvolvido por [@apenasgabs](https://github.com/apenasgabs)**
+
+Feito com muito ❤️ e preguiça de fazer tudo do zero
