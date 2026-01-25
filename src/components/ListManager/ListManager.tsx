@@ -1,28 +1,52 @@
 import type { ReactElement } from "react";
+import { useState } from "react";
 import { useApp } from "../../context";
 import { Button } from "../Button/Button";
-
+import { Modal } from "../Modal/Modal";
+import { useAlertModal, useConfirmModal } from "../Modal/useModal";
+import { Label } from "../Label/Label";
+import { Input } from "../Input/Input";
 /**
  * Componente para gerenciar listas (criar, editar, deletar, navegar)
  * Issue #4 - Gerenciamento de Listas e Navegação
  */
 export const ListManager = (): ReactElement => {
   const { lists, activeListId, setActiveList, createList, deleteList } = useApp();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [newListTitle, setNewListTitle] = useState("");
+
+  const { alert, AlertModal } = useAlertModal();
+  const { confirm, ConfirmModal } = useConfirmModal();
 
   const handleCreateList = (): void => {
-    const title = prompt("Nome da lista:");
+    setIsCreateModalOpen(true);
+  };
+
+  const handleConfirmCreate = (): void => {
+    const title = newListTitle.trim();
     if (title) {
       createList(title);
+      setNewListTitle("");
+      setIsCreateModalOpen(false);
     }
   };
 
-  const handleDeleteList = (id: string): void => {
+  const handleCancelCreate = (): void => {
+    setNewListTitle("");
+    setIsCreateModalOpen(false);
+  };
+
+  const handleDeleteList = async (id: string): Promise<void> => {
     if (id === "default-inbox") {
       alert("Não é possível deletar a lista Inbox");
       return;
     }
 
-    if (confirm("Tem certeza que deseja deletar esta lista? As tarefas serão removidas.")) {
+    const confirmed = await confirm(
+      "Tem certeza que deseja deletar esta lista? As tarefas serão removidas.",
+      "Deletar lista",
+    );
+    if (confirmed) {
       deleteList(id);
     }
   };
@@ -71,6 +95,57 @@ export const ListManager = (): ReactElement => {
           ))}
         </nav>
       </div>
+
+      <AlertModal />
+      <ConfirmModal />
+
+      <Modal
+        isOpen={isCreateModalOpen}
+        onClose={handleCancelCreate}
+        title="Nova lista"
+        size="md"
+        actions={
+          <>
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={handleCancelCreate}
+              data-testid="cancel-create-list"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleConfirmCreate}
+              disabled={!newListTitle.trim()}
+              data-testid="confirm-create-list"
+            >
+              Criar
+            </button>
+          </>
+        }
+      >
+        <div className="form-control w-full">
+          <Label htmlFor="list-title-input" className="label">
+            <span className="label-text">Nome da lista</span>
+          </Label>
+          <Input
+            id="list-title-input"
+            type="text"
+            placeholder="Digite o nome da lista..."
+            value={newListTitle}
+            onChange={(e) => setNewListTitle(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && newListTitle.trim()) {
+                handleConfirmCreate();
+              }
+            }}
+            data-testid="list-title-input"
+            autoFocus
+          />
+        </div>
+      </Modal>
     </aside>
   );
 };

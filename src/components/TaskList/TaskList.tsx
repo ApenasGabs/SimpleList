@@ -5,6 +5,7 @@ import { Button } from "../Button/Button";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { DatePicker } from "../DatePicker/DatePicker";
 import { DueDateBadge } from "../DueDateBadge/DueDateBadge";
+import { useAlertModal, useConfirmModal } from "../Modal/useModal";
 
 type SortMode = "created" | "alpha";
 
@@ -43,6 +44,9 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
   const [showCompleted, setShowCompleted] = useState<boolean>(true);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
   const [editingDateId, setEditingDateId] = useState<string | null>(null);
+
+  const { alert, AlertModal } = useAlertModal();
+  const { confirm, ConfirmModal } = useConfirmModal();
 
   const tasks = getTasksByList(listId);
 
@@ -95,8 +99,12 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
     updateTask(taskId, { priority: priorities[nextIndex] });
   };
 
-  const handleDeleteTask = (taskId: string): void => {
-    if (confirm("Tem certeza que deseja deletar esta tarefa?")) {
+  const handleDeleteTask = async (taskId: string): Promise<void> => {
+    const confirmed = await confirm(
+      "Tem certeza que deseja deletar esta tarefa?",
+      "Deletar tarefa",
+    );
+    if (confirmed) {
       deleteTask(taskId);
     }
   };
@@ -294,6 +302,9 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
           </div>
         </div>
       </div>
+
+      <AlertModal />
+      <ConfirmModal />
     </section>
   );
 };
