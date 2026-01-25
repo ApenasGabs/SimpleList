@@ -19,7 +19,7 @@ describe("ListManager (Issue #4)", () => {
     expect(screen.getByText("Inbox")).toBeInTheDocument();
   });
 
-  it("cria nova lista com prompt", async () => {
+  it("cria nova lista com modal", async () => {
     const user = userEvent.setup();
     render(
       <TestWrapper>
@@ -27,11 +27,21 @@ describe("ListManager (Issue #4)", () => {
       </TestWrapper>,
     );
 
-    window.prompt = () => "Minha Nova Lista";
-
     const createBtn = screen.getByText("+ Nova Lista");
     await user.click(createBtn);
 
+    // Modal deve aparecer
+    const input = screen.getByTestId("list-title-input");
+    expect(input).toBeInTheDocument();
+
+    // Digita o nome da lista
+    await user.type(input, "Minha Nova Lista");
+
+    // Clica em criar
+    const confirmBtn = screen.getByTestId("confirm-create-list");
+    await user.click(confirmBtn);
+
+    // Lista deve aparecer na navegação
     expect(screen.getByText("Minha Nova Lista")).toBeInTheDocument();
   });
 

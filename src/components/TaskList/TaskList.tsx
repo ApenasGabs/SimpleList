@@ -1,55 +1,13 @@
 import { useMemo, useState } from "react";
 import type { KeyboardEvent, ReactElement } from "react";
+import { useApp, type Task } from "../../context";
 import { Button } from "../Button/Button";
 import { Checkbox } from "../Checkbox/Checkbox";
-
-interface Task {
-  id: string;
-  title: string;
-  createdAt: number;
-  completed: boolean;
-  completedAt?: number;
-  list?: string;
-  isStarred?: boolean;
-}
+import { DatePicker } from "../DatePicker/DatePicker";
+import { DueDateBadge } from "../DueDateBadge/DueDateBadge";
+import { useAlertModal, useConfirmModal } from "../Modal/useModal";
 
 type SortMode = "created" | "alpha";
-
-const initialTasks: Task[] = [
-  {
-    id: "task-1",
-    title: "Pagar conta de luz",
-    createdAt: 1,
-    completed: false,
-    list: "Inbox",
-    isStarred: false,
-  },
-  {
-    id: "task-2",
-    title: "Comprar pão integral",
-    createdAt: 2,
-    completed: false,
-    list: "Inbox",
-    isStarred: true,
-  },
-  {
-    id: "task-3",
-    title: "Ligar para o médico às 15h",
-    createdAt: 3,
-    completed: false,
-    list: "Inbox",
-    isStarred: false,
-  },
-  {
-    id: "task-4",
-    title: "Revisão do projeto",
-    createdAt: 4,
-    completed: true,
-    completedAt: Date.now() - 1000,
-    list: "Work",
-    isStarred: false,
-  },
-];
 
 const sortTasks = (tasks: Task[], mode: SortMode): Task[] => {
   const copy = [...tasks];
@@ -63,24 +21,34 @@ const sortCompletedByFinishTime = (tasks: Task[]): Task[] => {
   return [...tasks].sort((a, b) => (a.completedAt ?? 0) - (b.completedAt ?? 0));
 };
 
-const buildId = (): string => {
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return crypto.randomUUID();
-  }
-  return `task-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-};
-
 const getBadgeTone = (task: Task): string => {
   if (task.completed) return "badge-ghost";
-  if (task.isStarred) return "badge-warning";
+  if (task.priority === "high") return "badge-error";
+  if (task.priority === "medium") return "badge-warning";
   return "badge-outline";
 };
 
-export const TaskList = (): ReactElement => {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+interface TaskListProps {
+  listId: string;
+}
+
+/**
+ * Componente para listar tarefas de uma lista específica
+ * Integrado com Context global
+ * Issue #2 - Ordenação
+ * Issue #5 - CRUD
+ */
+export const TaskList = ({ listId }: TaskListProps): ReactElement => {
+  const { getTasksByList, createTask, updateTask, deleteTask } = useApp();
   const [sortMode, setSortMode] = useState<SortMode>("created");
   const [showCompleted, setShowCompleted] = useState<boolean>(true);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+  const [editingDateId, setEditingDateId] = useState<string | null>(null);
+
+  const { alert, AlertModal } = useAlertModal();
+  const { confirm, ConfirmModal } = useConfirmModal();
+
+  const tasks = getTasksByList(listId);
 
   const orderedTasks = useMemo(() => {
     const active = sortTasks(
@@ -92,17 +60,10 @@ export const TaskList = (): ReactElement => {
   }, [tasks, sortMode, showCompleted]);
 
   const handleToggleComplete = (taskId: string): void => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === taskId
-          ? {
-              ...task,
-              completed: !task.completed,
-              completedAt: task.completed ? undefined : Date.now(),
-            }
-          : task,
-      ),
-    );
+    const task = tasks.find((t) => t.id === taskId);
+    if (task) {
+      updateTask(taskId, { completed: !task.completed });
+    }
   };
 
   const handleAddTask = (): void => {
@@ -111,20 +72,12 @@ export const TaskList = (): ReactElement => {
 
     const alreadyExists = tasks.some((task) => task.title.toLowerCase() === title.toLowerCase());
     if (alreadyExists) {
+      alert("Uma tarefa com este título já existe nesta lista");
       setNewTaskTitle("");
       return;
     }
 
-    const newTask: Task = {
-      id: buildId(),
-      title,
-      createdAt: Date.now(),
-      completed: false,
-      list: "Inbox",
-      isStarred: false,
-    };
-
-    setTasks((prev) => [...prev, newTask]);
+    createTask(title, listId);
     setNewTaskTitle("");
   };
 
@@ -135,21 +88,50 @@ export const TaskList = (): ReactElement => {
     }
   };
 
-  const handleToggleStar = (taskId: string): void => {
-    setTasks((prev) =>
-      prev.map((task) => (task.id === taskId ? { ...task, isStarred: !task.isStarred } : task)),
+  const handleTogglePriority = (taskId: string): void => {
+    const task = tasks.find((t) => t.id === taskId);
+    if (!task) return;
+
+    const priorities: ("low" | "medium" | "high")[] = ["low", "medium", "high"];
+    const currentIndex = priorities.indexOf(task.priority ?? "low");
+    const nextIndex = (currentIndex + 1) % priorities.length;
+
+    updateTask(taskId, { priority: priorities[nextIndex] });
+  };
+
+  const handleDeleteTask = async (taskId: string): Promise<void> => {
+    const confirmed = await confirm(
+      "Tem certeza que deseja deletar esta tarefa?",
+      "Deletar tarefa",
     );
+    if (confirmed) {
+      deleteTask(taskId);
+    }
+  };
+
+  const getPriorityLabel = (priority?: string): string => {
+    switch (priority) {
+      case "high":
+        return "Alta";
+      case "medium":
+        return "Média";
+      case "low":
+        return "Baixa";
+      default:
+        return "Sem prioridade";
+    }
+  };
+
+  const handleSetDueDate = (taskId: string, dueDate: number | undefined): void => {
+    updateTask(taskId, { dueDate });
+    setEditingDateId(null);
   };
 
   return (
-    <section className="w-full max-w-md mx-auto">
+    <section className="w-full">
       <div className="card bg-base-100 shadow-xl border border-base-300">
         <div className="card-body gap-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="badge badge-primary">Inbox</div>
-              <span className="text-sm text-base-content/70">Mobile first</span>
-            </div>
             <div className="text-sm text-base-content/60" data-testid="task-count">
               {tasks.filter((task) => !task.completed).length} abertas
             </div>
@@ -216,7 +198,7 @@ export const TaskList = (): ReactElement => {
               return (
                 <div
                   key={task.id}
-                  className="flex items-center gap-3 bg-base-100 border border-base-200 rounded-xl px-3 py-3 shadow-sm"
+                  className="flex items-center gap-3 bg-base-100 border border-base-200 rounded-xl px-3 py-3 shadow-sm hover:shadow-md transition-shadow"
                   data-testid={`task-row-${task.id}`}
                 >
                   <input
@@ -234,27 +216,75 @@ export const TaskList = (): ReactElement => {
                     >
                       {task.title}
                     </p>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-base-content/60">
-                      <span className={`badge badge-sm ${getBadgeTone(task)}`}>
-                        {task.list ?? "Inbox"}
-                      </span>
-                      {task.completed ? (
+                    {task.description && (
+                      <p className="text-xs text-base-content/60 truncate mt-0.5">
+                        {task.description}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-2 mt-1 text-xs text-base-content/60 flex-wrap">
+                      {task.priority && (
+                        <span className={`badge badge-sm ${getBadgeTone(task)}`}>
+                          {getPriorityLabel(task.priority)}
+                        </span>
+                      )}
+                      {editingDateId === task.id ? (
+                        <div className="flex items-center gap-1">
+                          <DatePicker
+                            value={task.dueDate}
+                            onChange={(date) => handleSetDueDate(task.id, date)}
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-xs btn-ghost"
+                            onClick={() => setEditingDateId(null)}
+                          >
+                            ✓
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          {task.dueDate && (
+                            <DueDateBadge
+                              dueDate={task.dueDate}
+                              completed={task.completed}
+                              onClick={() => setEditingDateId(task.id)}
+                            />
+                          )}
+                        </>
+                      )}
+                      {task.completed && (
                         <span className="badge badge-ghost badge-sm">Concluída</span>
-                      ) : null}
-                      {task.isStarred ? (
-                        <span className="badge badge-warning badge-sm">Prioritária</span>
-                      ) : null}
+                      )}
                     </div>
                   </div>
                   <button
                     type="button"
-                    className={`btn btn-ghost btn-xs ${task.isStarred ? "text-warning" : "text-base-content/60"}`}
-                    aria-label={task.isStarred ? "Remover prioridade" : "Marcar como prioritária"}
-                    onClick={() => handleToggleStar(task.id)}
-                    data-testid={`task-star-${task.id}`}
-                    aria-pressed={task.isStarred}
+                    className="btn btn-ghost btn-xs"
+                    aria-label="Adicionar/editar data"
+                    onClick={() => setEditingDateId(editingDateId === task.id ? null : task.id)}
+                    data-testid={`task-date-${task.id}`}
+                    title="Clique para adicionar/editar data"
                   >
-                    Fav
+                    📅
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-xs"
+                    aria-label="Mudar prioridade"
+                    onClick={() => handleTogglePriority(task.id)}
+                    data-testid={`task-priority-${task.id}`}
+                    title={getPriorityLabel(task.priority)}
+                  >
+                    ★
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-xs text-error"
+                    aria-label={`Deletar ${task.title}`}
+                    onClick={() => handleDeleteTask(task.id)}
+                    data-testid={`task-delete-${task.id}`}
+                  >
+                    ✕
                   </button>
                 </div>
               );
@@ -262,12 +292,19 @@ export const TaskList = (): ReactElement => {
 
             {orderedTasks.length === 0 && (
               <div className="alert alert-info" data-testid="empty-state">
-                <span>Nenhuma tarefa cadastrada.</span>
+                <span>
+                  {tasks.length === 0
+                    ? "Nenhuma tarefa nesta lista. Crie uma para começar!"
+                    : "Todas as tarefas foram concluídas. Parabéns!"}
+                </span>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      <AlertModal />
+      <ConfirmModal />
     </section>
   );
 };

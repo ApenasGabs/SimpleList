@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { Footer } from "./components/Footer/Footer";
 import { ListManager } from "./components/ListManager/ListManager";
 import { Navbar } from "./components/Navbar/Navbar";
-import { TaskList } from "./components/TaskList/TaskList.v2";
+import { TaskList } from "./components/TaskList/TaskList";
 import ThemeSelector from "./components/ThemeSelector/ThemeSelector";
 import { useApp } from "./context";
 
