@@ -20,16 +20,10 @@ export const ExternalLink = ({
 }: ExternalLinkProps): ReactElement => {
   const defaultClasses =
     className ||
-    "text-primary hover:text-primary-focus underline transition-colors cursor-pointer";
+    "text-info-content hover:text-info-content-focus underline transition-colors cursor-pointer";
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className={defaultClasses}
-      {...props}
-    >
+    <a href={href} target="_blank" rel="noreferrer" className={defaultClasses} {...props}>
       {children}
     </a>
   );
