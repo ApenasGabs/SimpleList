@@ -106,11 +106,15 @@ export const AppProvider = ({ children }: AppProviderProps): ReactElement => {
   const createTask = useCallback((title: string, listId: string): void => {
     if (!title.trim()) return;
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const newTask: Task = {
       id: buildId(),
       title: title.trim(),
       completed: false,
       listId,
+      dueDate: today.getTime(),
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };

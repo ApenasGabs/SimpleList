@@ -8,13 +8,19 @@ import { DueDateBadge } from "../DueDateBadge/DueDateBadge";
 import { useAlertModal, useConfirmModal } from "../Modal/useModal";
 
 type SortMode = "created" | "alpha";
+type SortDirection = "asc" | "desc";
 
-const sortTasks = (tasks: Task[], mode: SortMode): Task[] => {
+const sortTasks = (tasks: Task[], mode: SortMode, direction: SortDirection): Task[] => {
   const copy = [...tasks];
+  let sorted: Task[];
+
   if (mode === "alpha") {
-    return copy.sort((a, b) => a.title.localeCompare(b.title, "pt"));
+    sorted = copy.sort((a, b) => a.title.localeCompare(b.title, "pt"));
+  } else {
+    sorted = copy.sort((a, b) => a.createdAt - b.createdAt);
   }
-  return copy.sort((a, b) => a.createdAt - b.createdAt);
+
+  return direction === "desc" ? sorted.reverse() : sorted;
 };
 
 const sortCompletedByFinishTime = (tasks: Task[]): Task[] => {
@@ -41,6 +47,7 @@ interface TaskListProps {
 export const TaskList = ({ listId }: TaskListProps): ReactElement => {
   const { getTasksByList, createTask, updateTask, deleteTask } = useApp();
   const [sortMode, setSortMode] = useState<SortMode>("created");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const [showCompleted, setShowCompleted] = useState<boolean>(true);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
   const [editingDateId, setEditingDateId] = useState<string | null>(null);
@@ -50,14 +57,26 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
 
   const tasks = getTasksByList(listId);
 
+  const handleSortModeChange = (newMode: SortMode): void => {
+    if (sortMode === newMode) {
+      // Se clicou no mesmo botão, inverte a direção
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      // Se clicou em um botão diferente, muda o modo e reseta direção para asc
+      setSortMode(newMode);
+      setSortDirection("asc");
+    }
+  };
+
   const orderedTasks = useMemo(() => {
     const active = sortTasks(
       tasks.filter((task) => !task.completed),
       sortMode,
+      sortDirection,
     );
     const completed = sortCompletedByFinishTime(tasks.filter((task) => task.completed));
     return showCompleted ? [...active, ...completed] : active;
-  }, [tasks, sortMode, showCompleted]);
+  }, [tasks, sortMode, sortDirection, showCompleted]);
 
   const handleToggleComplete = (taskId: string): void => {
     const task = tasks.find((t) => t.id === taskId);
@@ -163,18 +182,20 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
               <button
                 type="button"
                 className={`tab ${sortMode === "created" ? "tab-active" : ""}`}
-                onClick={() => setSortMode("created")}
+                onClick={() => handleSortModeChange("created")}
                 data-testid="sort-created"
+                title={`Ordenar por criação ${sortMode === "created" && sortDirection === "desc" ? "(descendente)" : "(ascendente)"}`}
               >
-                Criação
+                Criação {sortMode === "created" && (sortDirection === "desc" ? "▼" : "▲")}
               </button>
               <button
                 type="button"
                 className={`tab ${sortMode === "alpha" ? "tab-active" : ""}`}
-                onClick={() => setSortMode("alpha")}
+                onClick={() => handleSortModeChange("alpha")}
                 data-testid="sort-alpha"
+                title={`Ordenar alfabeticamente ${sortMode === "alpha" && sortDirection === "desc" ? "(descendente)" : "(ascendente)"}`}
               >
-                Alfabética
+                Alfabética {sortMode === "alpha" && (sortDirection === "desc" ? "▼" : "▲")}
               </button>
             </div>
 
