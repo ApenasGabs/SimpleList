@@ -1,19 +1,27 @@
 import type { JSX } from "react";
 import { Footer } from "./components/Footer/Footer";
+import { ListManager } from "./components/ListManager/ListManager";
 import { Navbar } from "./components/Navbar/Navbar";
-import { TaskList } from "./components/TaskList/TaskList";
+import { TaskList } from "./components/TaskList/TaskList.v2";
 import ThemeSelector from "./components/ThemeSelector/ThemeSelector";
+import { useApp } from "./context";
 
 const App = (): JSX.Element => {
+  const { activeListId } = useApp();
+
   return (
     <div className="min-h-screen bg-base-200 flex flex-col">
       <Navbar title="SimpleList">
         <ThemeSelector />
       </Navbar>
 
-      <main className="flex-1 px-4 py-6">
-        <TaskList />
-      </main>
+      <div className="flex-1 flex flex-col md:flex-row gap-4 p-4">
+        <ListManager />
+
+        <main className="flex-1">
+          <TaskList listId={activeListId} />
+        </main>
+      </div>
 
       <Footer />
     </div>
