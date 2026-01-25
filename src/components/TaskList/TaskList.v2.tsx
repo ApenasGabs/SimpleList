@@ -3,6 +3,8 @@ import type { KeyboardEvent, ReactElement } from "react";
 import { useApp, type Task } from "../../context";
 import { Button } from "../Button/Button";
 import { Checkbox } from "../Checkbox/Checkbox";
+import { DatePicker } from "../DatePicker/DatePicker";
+import { DueDateBadge } from "../DueDateBadge/DueDateBadge";
 
 type SortMode = "created" | "alpha";
 
@@ -40,6 +42,7 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
   const [sortMode, setSortMode] = useState<SortMode>("created");
   const [showCompleted, setShowCompleted] = useState<boolean>(true);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+  const [editingDateId, setEditingDateId] = useState<string | null>(null);
 
   const tasks = getTasksByList(listId);
 
@@ -109,6 +112,11 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
       default:
         return "Sem prioridade";
     }
+  };
+
+  const handleSetDueDate = (taskId: string, dueDate: number | undefined): void => {
+    updateTask(taskId, { dueDate });
+    setEditingDateId(null);
   };
 
   return (
@@ -211,16 +219,46 @@ export const TaskList = ({ listId }: TaskListProps): ReactElement => {
                           {getPriorityLabel(task.priority)}
                         </span>
                       )}
-                      {task.dueDate && (
-                        <span className="badge badge-outline badge-sm">
-                          {new Date(task.dueDate).toLocaleDateString("pt-BR")}
-                        </span>
+                      {editingDateId === task.id ? (
+                        <div className="flex items-center gap-1">
+                          <DatePicker
+                            value={task.dueDate}
+                            onChange={(date) => handleSetDueDate(task.id, date)}
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-xs btn-ghost"
+                            onClick={() => setEditingDateId(null)}
+                          >
+                            ✓
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          {task.dueDate && (
+                            <DueDateBadge
+                              dueDate={task.dueDate}
+                              completed={task.completed}
+                              onClick={() => setEditingDateId(task.id)}
+                            />
+                          )}
+                        </>
                       )}
                       {task.completed && (
                         <span className="badge badge-ghost badge-sm">Concluída</span>
                       )}
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-xs"
+                    aria-label="Adicionar/editar data"
+                    onClick={() => setEditingDateId(editingDateId === task.id ? null : task.id)}
+                    data-testid={`task-date-${task.id}`}
+                    title="Clique para adicionar/editar data"
+                  >
+                    📅
+                  </button>
                   <button
                     type="button"
                     className="btn btn-ghost btn-xs"
