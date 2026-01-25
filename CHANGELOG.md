@@ -5,6 +5,16 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.4.0](https://github.com/ApenasGabs/SimpleList/compare/v1.3.0...v1.4.0) (2026-01-25)
+
+### ✨ Features
+
+* ✨ implementa testes E2E e pipeline CI/CD (issue [#16](https://github.com/ApenasGabs/SimpleList/issues/16)) ([9434ffb](https://github.com/ApenasGabs/SimpleList/commit/9434ffbf9c523965edb31265013fafd44ec782ca))
+
+### 🧱 CI/CD
+
+* 🧱 alinha pipeline de PR com release (legacy-peer-deps + LTS) ([ca08a0d](https://github.com/ApenasGabs/SimpleList/commit/ca08a0d3ba6c37e7955578893191330760b86e04))
+
 ## [1.3.0](https://github.com/ApenasGabs/SimpleList/compare/v1.2.0...v1.3.0) (2026-01-25)
 
 ### ✨ Features
