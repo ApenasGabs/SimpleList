@@ -17,3 +17,4 @@ export { Progress } from "./Progress/Progress";
 export { Radio } from "./Radio/Radio";
 export { Textarea } from "./Textarea/Textarea";
 export { ToolItem } from "./ToolItem/ToolItem";
+export { TaskList } from "./TaskList/TaskList";
