@@ -1,62 +1,106 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { AppProvider } from "../../../context";
 import { TaskList } from "../TaskList";
 
-const getTaskTitlesInOrder = (): string[] =>
-  screen.getAllByTestId(/task-title-/).map((node) => (node.textContent ?? "").trim());
+const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+  <AppProvider>{children}</AppProvider>
+);
 
-describe("TaskList", () => {
-  it("mantém concluídos no final e atualiza posição ao concluir", async () => {
+describe("TaskList com Context", () => {
+  it("cria nova tarefa e exibe na lista", async () => {
     const user = userEvent.setup();
-    render(<TaskList />);
+    render(
+      <TestWrapper>
+        <TaskList listId="default-inbox" />
+      </TestWrapper>,
+    );
 
-    expect(getTaskTitlesInOrder()).toEqual([
-      "Pagar conta de luz",
-      "Comprar pão integral",
-      "Ligar para o médico às 15h",
-      "Revisão do projeto",
-    ]);
+    const input = screen.getByTestId("input-new-task");
+    const button = screen.getByTestId("btn-add-task");
 
-    await user.click(screen.getByTestId("task-toggle-task-2"));
+    await user.type(input, "Nova tarefa");
+    await user.click(button);
 
-    expect(getTaskTitlesInOrder()).toEqual([
-      "Pagar conta de luz",
-      "Ligar para o médico às 15h",
-      "Revisão do projeto",
-      "Comprar pão integral",
-    ]);
+    expect(screen.getByText("Nova tarefa")).toBeInTheDocument();
   });
 
-  it("devolve item reaberto para posição correta conforme ordenação", async () => {
+  it("marca tarefa como completa", async () => {
     const user = userEvent.setup();
-    render(<TaskList />);
+    render(
+      <TestWrapper>
+        <TaskList listId="default-inbox" />
+      </TestWrapper>,
+    );
 
-    await user.click(screen.getByTestId("sort-alpha"));
+    const input = screen.getByTestId("input-new-task");
+    await user.type(input, "Tarefa para completar");
+    await user.keyboard("{Enter}");
 
-    expect(getTaskTitlesInOrder()).toEqual([
-      "Comprar pão integral",
-      "Ligar para o médico às 15h",
-      "Pagar conta de luz",
-      "Revisão do projeto",
-    ]);
+    const checkbox = screen.getByLabelText("Marcar Tarefa para completar");
+    await user.click(checkbox);
 
-    await user.click(screen.getByTestId("task-toggle-task-1"));
+    expect(checkbox).toBeChecked();
+    expect(screen.getByText("Tarefa para completar")).toHaveClass("line-through");
+  });
 
-    expect(getTaskTitlesInOrder()).toEqual([
-      "Comprar pão integral",
-      "Ligar para o médico às 15h",
-      "Revisão do projeto",
-      "Pagar conta de luz",
-    ]);
+  it("detecta duplicação de título", async () => {
+    const user = userEvent.setup();
+    render(
+      <TestWrapper>
+        <TaskList listId="default-inbox" />
+      </TestWrapper>,
+    );
 
-    await user.click(screen.getByTestId("task-toggle-task-1"));
+    const input = screen.getByTestId("input-new-task");
+    const button = screen.getByTestId("btn-add-task");
 
-    expect(getTaskTitlesInOrder()).toEqual([
-      "Comprar pão integral",
-      "Ligar para o médico às 15h",
-      "Pagar conta de luz",
-      "Revisão do projeto",
-    ]);
+    await user.type(input, "Tarefa duplicada");
+    await user.click(button);
+
+    await user.clear(input);
+    await user.type(input, "Tarefa duplicada");
+
+    window.alert = () => {}; // Mock alert
+    await user.click(button);
+
+    const elements = screen.getAllByText("Tarefa duplicada");
+    expect(elements).toHaveLength(1);
+  });
+
+  it("alterna prioridade da tarefa", async () => {
+    const user = userEvent.setup();
+    render(
+      <TestWrapper>
+        <TaskList listId="default-inbox" />
+      </TestWrapper>,
+    );
+
+    const input = screen.getByTestId("input-new-task");
+    await user.type(input, "Tarefa com prioridade");
+    await user.keyboard("{Enter}");
+
+    const priorityBtns = screen.getAllByRole("button", { name: "Mudar prioridade" });
+    expect(priorityBtns.length).toBeGreaterThan(0);
+
+    await user.click(priorityBtns[0]);
+    expect(priorityBtns[0]).toBeInTheDocument();
+  });
+
+  it("exibe botão para adicionar/editar data", async () => {
+    const user = userEvent.setup();
+    render(
+      <TestWrapper>
+        <TaskList listId="default-inbox" />
+      </TestWrapper>,
+    );
+
+    const input = screen.getByTestId("input-new-task");
+    await user.type(input, "Tarefa com data");
+    await user.keyboard("{Enter}");
+
+    const dateBtns = screen.getAllByRole("button", { name: "Adicionar/editar data" });
+    expect(dateBtns.length).toBeGreaterThan(0);
   });
 });

@@ -18,6 +18,6 @@ export { Logo } from "./Logo/Logo";
 export { Navbar } from "./Navbar/Navbar";
 export { Progress } from "./Progress/Progress";
 export { Radio } from "./Radio/Radio";
-export { TaskList } from "./TaskList/TaskList.v2";
+export { TaskList } from "./TaskList/TaskList";
 export { Textarea } from "./Textarea/Textarea";
 export { ToolItem } from "./ToolItem/ToolItem";
