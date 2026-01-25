@@ -5,6 +5,21 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.2.0](https://github.com/ApenasGabs/SimpleList/compare/v1.1.0...v1.2.0) (2026-01-25)
+
+### ✨ Features
+
+* ✨ adiciona sistema de modais customizados com dialog para substituir alerts do navegador ([b793606](https://github.com/ApenasGabs/SimpleList/commit/b793606ad0576ffaaca9c8eca91a202472925897))
+* ✨ implementa date picker e due date badge com daisyUI ([#6](https://github.com/ApenasGabs/SimpleList/issues/6)) ([751d745](https://github.com/ApenasGabs/SimpleList/commit/751d74585e19f096a2b6ba60276f1c2b2a74d4b9))
+
+### 👌 Styles
+
+* 👌 atualiza texto do footer com mensagem personalizada ([e427a19](https://github.com/ApenasGabs/SimpleList/commit/e427a1987074b54cf5f93972633e14812cf5d2dc))
+
+### ♻️ Refactoring
+
+* ♻️ consolida TaskList v2 como principal, remove arquivos .v2 e padroniza estrutura ([c610ad5](https://github.com/ApenasGabs/SimpleList/commit/c610ad5a6f6f74aa533222d1368e85c412495b69))
+
 ## [1.1.0](https://github.com/ApenasGabs/SimpleList/compare/v1.0.0...v1.1.0) (2026-01-25)
 
 ### ✨ Features
