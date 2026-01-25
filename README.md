@@ -1,49 +1,38 @@
-# 🚀 Apenas Template - React + TypeScript + Vite + Tailwind CSS + daisyUI
+# SimpleList - Gerenciador de Tarefas e Listas
 
-Um template moderno, produtivo e completo para iniciar seus projetos React com tecnologias de ponta. Configurado com TypeScript, Vite, Tailwind CSS, daisyUI, testes, releases automáticas e ferramentas de qualidade de código.
+Uma aplicação moderna e responsiva para gerenciamento de tarefas e listas, desenvolvida com React 19, TypeScript e Vite. Organize suas tarefas com prioridades, datas de vencimento e temas personalizáveis.
 
-> **Feito com muito ❤️ e preguiça de fazer tudo do zero**
+> **Desenvolvido com ❤️ e produtividade em mente**
 
-[![GitHub release](https://img.shields.io/github/v/release/ApenasGabs/ApenasTemplate?style=flat-square)](https://github.com/ApenasGabs/ApenasTemplate/releases)
-[![License](https://img.shields.io/github/license/ApenasGabs/ApenasTemplate?style=flat-square)](./LICENSE)
+## 🎯 Funcionalidades Principais
 
-## 📚 Documentação
-
-- [🚀 Guia de Configuração](./docs/SETUP.md) - Como configurar o template
-- [📝 Sistema de Release](./docs/RELEASE.md) - Como funciona o versionamento automático
-- [💻 Estrutura do Projeto](#-estrutura-do-projeto) - Organização dos arquivos
-
-## 🎯 Objetivos
-
-Este template tem como objetivo fornecer uma base sólida e pronta para produção para projetos React, eliminando a necessidade de configurar manualmente:
-
-- ✅ Ambiente de desenvolvimento rápido e reativo (HMR instantâneo)
-- ✅ Tipagem estática completa com TypeScript
-- ✅ Styling elegante com Tailwind CSS + daisyUI
-- ✅ Testes unitários com Vitest
-- ✅ Testes end-to-end com Playwright
-- ✅ Linting e formatação de código com ESLint
-- ✅ **Releases automáticas com Semantic Release**
-- ✅ **Changelog gerado automaticamente**
-- ✅ Build otimizado para produção
-- ✅ Estrutura de projeto bem organizada e escalável
+- Criar e gerenciar múltiplas listas de tarefas
+- Adicionar tarefas com título, descrição e data de vencimento
+- Definir prioridades para tarefas (Baixa, Média, Alta)
+- Marcar tarefas como concluídas
+- Visualizar tarefas do dia (Today View)
+- Ordenar tarefas por data de criação ou alfabeticamente
+- 33 temas disponíveis (Light, Dark, Cupcake, Halloween, Synthwave, e mais)
+- Persistência de dados com localStorage
+- Interface responsiva para mobile, tablet e desktop
+- Testes automatizados (87+ unitários, 29 E2E)
 
 ## 🛠️ Tecnologias Utilizadas
 
 ### Frontend
-
 - **React 19.2.0** - Biblioteca JavaScript para UI reativa
 - **TypeScript 5.9.3** - Tipagem estática e segurança de tipos
 - **Vite 7.2.4** - Build tool ultra-rápido com HMR
 - **Tailwind CSS 4.1.18** - Framework CSS utility-first
 - **daisyUI 5.5.14** - Componentes elegantes para Tailwind
 
-### Ferramentas de Desenvolvimento
-
-- **Vitest 4.0.18** - Framework de testes unitários
-- **Playwright 1.58.0** - Testes end-to-end em múltiplos navegadores
+### Testes & Qualidade
+- **Vitest 4.0.18** - Testes unitários (87 testes)
+- **Playwright 1.58.0** - Testes E2E em múltiplos navegadores (29 testes)
 - **ESLint 9.39.1** - Linting e análise de código
-- **PostCSS 8.5.6** - Transformações CSS automatizadas
+
+### CI/CD
+- **GitHub Actions** - Automação de testes e build em PRs
 
 ## 📦 Como Começar
 
@@ -56,10 +45,10 @@ Este template tem como objetivo fornecer uma base sólida e pronta para produç�
 
 ```bash
 # Clone o repositório
-git clone https://github.com/ApenasGabs/apenasTemplate.git
+git clone https://github.com/ApenasGabs/SimpleList.git
 
 # Entre na pasta do projeto
-cd apenasTemplate
+cd SimpleList
 
 # Instale as dependências
 npm install
@@ -85,12 +74,12 @@ npm run build            # Cria build otimizado para produção
 npm run preview          # Visualiza o build localmente
 
 # Testes
-npm run test             # Executa testes unitários com Vitest
+npm run test             # Executa 87 testes unitários com Vitest
 npm run test:ui          # Interface visual dos testes
 npm run test:coverage    # Relatório de cobertura de testes
 
 # Testes E2E
-npm run e2e              # Executa testes Playwright
+npm run e2e              # Executa 29 testes Playwright
 npm run e2e:ui           # Interface visual dos testes E2E
 npm run e2e:debug        # Modo debug dos testes
 npm run e2e:report       # Visualiza o relatório HTML
@@ -103,42 +92,47 @@ npm run lint:fix         # Corrige problemas automaticamente
 ## 📂 Estrutura do Projeto
 
 ```
-apenasTemplate/
-├── e2e/                          # Testes end-to-end
-│   ├── app.spec.ts              # Testes da página
-│   ├── counter.spec.ts          # Testes do contador
-│   ├── features.spec.ts         # Testes das features
-│   ├── advanced.spec.ts         # Testes avançados
-│   └── README.md                # Documentação E2E
+SimpleList/
+├── e2e/                                    # Testes end-to-end (29 testes)
+│   ├── general/
+│   │   └── app.spec.ts                    # Testes de carregamento e navegação
+│   └── components/
+│       ├── tasks.spec.ts                  # Testes de tarefas (criar, editar, deletar)
+│       └── theme-selector.spec.ts         # Testes de temas (25 testes)
 │
 ├── src/
-│   ├── __tests__/               # Testes unitários
-│   │   └── example.test.ts
-│   ├── assets/                  # Imagens, fontes, etc.
-│   ├── App.tsx                  # Componente principal
-│   ├── main.tsx                 # Ponto de entrada
-│   └── index.css                # Estilos globais
+│   ├── __tests__/                         # Testes unitários
+│   ├── components/
+│   │   ├── App.tsx                        # Componente principal
+│   │   ├── TaskList/
+│   │   │   ├── TaskList.tsx              # Lista de tarefas
+│   │   │   └── __tests__/
+│   │   ├── ListManager/                   # Gerenciador de listas
+│   │   ├── TodayView/                     # Visualização do dia
+│   │   ├── DatePicker/                    # Seletor de datas
+│   │   ├── ThemeSelector/                 # Seletor de temas
+│   │   └── ...outros componentes
+│   ├── assets/                            # Imagens e fontes
+│   ├── App.tsx                            # App principal
+│   ├── main.tsx                           # Ponto de entrada
+│   └── index.css                          # Estilos globais
 │
-├── public/                       # Arquivos estáticos
-├── playwright.config.ts         # Configuração Playwright
-├── tailwind.config.js           # Configuração Tailwind CSS
-├── tsconfig.json                # Configuração TypeScript
-├── vite.config.ts               # Configuração Vite
-└── eslint.config.js             # Configuração ESLint
+├── public/                                # Arquivos estáticos
+├── .github/
+│   └── workflows/
+│       └── pr-tests.yml                   # Pipeline de CI/CD
+├── playwright.config.ts                   # Configuração Playwright
+├── tailwind.config.js                     # Configuração Tailwind CSS
+├── tsconfig.json                          # Configuração TypeScript
+├── vite.config.ts                         # Configuração Vite
+└── eslint.config.js                       # Configuração ESLint
 ```
 
 ## 🎨 Recursos Principais
 
 ### Tailwind CSS + daisyUI
 
-Componentes elegantes e prontos para uso:
-
-- Navbar responsiva
-- Cards estilizados com links
-- Botões e badges
-- Alerts informativos
-- Grid responsivo
-- Temas pré-configurados (light, dark, cupcake)
+Componentes elegantes e prontos para uso com 33 temas personalizáveis.
 
 ### TypeScript
 
@@ -150,17 +144,16 @@ Alterações no código são refletidas instantaneamente sem perder o estado da 
 
 ### Testes Completos
 
-- **Vitest**: Testes unitários rápidos e confiáveis
-- **Playwright**: Testes end-to-end em navegadores reais (Chrome, Firefox, Safari, Mobile)
+- **Vitest**: 87 testes unitários rápidos e confiáveis
+- **Playwright**: 29 testes E2E em navegadores reais (Chrome, Firefox, Safari)
 
 ## 🚀 Como Usar Este Template
 
-### 1. Clonar ou usar como template
+### 1. Clonar ou fazer fork
 
 ```bash
-# Via GitHub (use o botão "Use this template")
-# ou clone normalmente
-git clone https://github.com/ApenasGabs/apenasTemplate.git
+git clone https://github.com/ApenasGabs/SimpleList.git
+cd SimpleList
 ```
 
 ### 2. Instalar dependências
@@ -175,31 +168,22 @@ npm install
 npm run dev
 ```
 
-### 4. Personalizar
+### 4. Rodar testes
 
-- Edite `src/App.tsx` para suas necessidades
-- Customize cores em `tailwind.config.js`
-- Adicione componentes em `src/`
-- Adicione testes em `src/__tests__/` e `e2e/`
+```bash
+npm run test      # Testes unitários
+npm run e2e       # Testes E2E
+npm run lint      # Verificar qualidade
+```
 
 ### 5. Build para produção
 
 ```bash
 npm run build
-npm run preview  # Testar o build localmente
+npm run preview   # Testar o build localmente
 ```
 
 ## 🔧 Personalizações Recomendadas
-
-### Adicionar novos temas daisyUI
-
-Edite `tailwind.config.js`:
-
-```javascript
-daisyui: {
-  themes: ["light", "dark", "cupcake", "bumblebee"],
-}
-```
 
 ### Estender Tailwind Theme
 
@@ -240,6 +224,87 @@ const apiUrl = import.meta.env.VITE_API_URL
 - [Playwright](https://playwright.dev)
 - [ESLint](https://eslint.org)
 
+## 🧪 Testes
+
+### Testes Unitários (87 testes)
+
+```bash
+npm run test              # Executa todos os testes com Vitest
+npm run test:ui           # Interface visual com cobertura
+npm run test:coverage     # Relatório detalhado de cobertura
+```
+
+Cobertura:
+- Componentes básicos (Button, Input, Card, etc.)
+- TaskList (criar, editar, deletar, ordenar tarefas)
+- ListManager (criar, alternar, deletar listas)
+- DatePicker (seleção de datas)
+- ThemeSelector (seleção de temas)
+- TodayView (visualização do dia)
+
+### Testes E2E (29 testes)
+
+```bash
+npm run e2e               # Executa todos os testes Playwright
+npm run e2e:debug         # Modo debug interativo
+npm run e2e:report        # Visualiza relatório HTML
+```
+
+Cobertura:
+- **App (4 testes)**: Carregamento, inbox, estado vazio, alternância de abas
+- **Tarefas (4 testes)**: Criar, completar, ordenar, deletar
+- **Temas (25 testes)**: Renderização, temas específicos, persistência, acessibilidade, responsividade
+
+## 🎨 Temas Disponíveis
+
+SimpleList oferece 33 temas diferentes através do daisyUI:
+
+Light, Dark, Cupcake, Bumblebee, Emerald, Corporate, Synthwave, Retro, Cyberpunk, Valentine, Halloween, Garden, Forest, Aqua, Lofi, Pastel, Fantasy, Wireframe, Black, Luxury, Dracula, CMYK, Autumn, Business, Acid, Lemonade, Night, Coffee, Winter, Dim, Nord, Sunset e mais.
+
+Selecione seu tema favorito através do ícone de paleta de cores na navbar.
+
+## 🚀 Roadmap
+
+### v2.0.0 - Sincronização na Nuvem
+- Sincronizar tarefas com servidor
+- Autenticação com Google/GitHub
+- Backup automático na nuvem
+
+### v2.1.0 - Colaboração
+- Compartilhar listas com outros usuários
+- Comentários em tarefas
+- Histórico de alterações
+
+### v3.0.0 - Produtividade Avançada
+- Recorrências de tarefas
+- Integração com calendário
+- Automações e atalhos
+
+## 🌐 SEO & Descoberta
+
+SimpleList é otimizado para descoberta:
+- Otimizado para busca por "listas", "tarefas", "gerenciador"
+- Perfil do desenvolvedor: `@apenasgabs`, `apenas gabs`
+- Descrição completa em meta tags
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Por favor:
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/minha-feature`)
+3. Commit suas mudanças (`git commit -m 'feat: descrição'`)
+4. Push para a branch (`git push origin feature/minha-feature`)
+5. Abra um Pull Request
+
+### Padrões de Código
+
+- Sempre usar TypeScript com tipagem explícita
+- Nunca usar `any`
+- Arrow functions (`const fn = () => {}`)
+- Testes para todas as funcionalidades
+- Componentes com `data-testid` para testes E2E
+
 ## 📄 Licença
 
 Este projeto está sob a licença MIT.
@@ -248,4 +313,4 @@ Este projeto está sob a licença MIT.
 
 **Desenvolvido por [@apenasgabs](https://github.com/apenasgabs)**
 
-Feito com muito ❤️ e preguiça de fazer tudo do zero
+Visite o projeto: https://github.com/ApenasGabs/SimpleList
