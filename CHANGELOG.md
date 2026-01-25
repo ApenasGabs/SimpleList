@@ -5,6 +5,12 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.1.0](https://github.com/ApenasGabs/SimpleList/compare/v1.0.0...v1.1.0) (2026-01-25)
+
+### ✨ Features
+
+* ✨ implementa gerenciamento de listas e CRUD de tarefas ([#4](https://github.com/ApenasGabs/SimpleList/issues/4) [#5](https://github.com/ApenasGabs/SimpleList/issues/5)) ([3421b10](https://github.com/ApenasGabs/SimpleList/commit/3421b10ed562ce764679bd54d13ca89a9f17538e))
+
 ## 1.0.0 (2026-01-25)
 
 ### ✨ Features
