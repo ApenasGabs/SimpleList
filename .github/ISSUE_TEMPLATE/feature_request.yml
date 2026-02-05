@@ -2,7 +2,6 @@ name: ✨ Solicitar Melhoria
 description: Sugira uma nova funcionalidade ou melhoria
 title: "[Feature]: "
 labels: ["enhancement"]
-type: feature
 body:
   - type: markdown
     attributes:
