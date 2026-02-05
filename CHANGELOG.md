@@ -5,6 +5,12 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.5.0](https://github.com/ApenasGabs/SimpleList/compare/v1.4.0...v1.5.0) (2026-02-05)
+
+### ✨ Features
+
+* ✨ adiciona templates de issue para reportar bugs e solicitar melhorias ([0a794b4](https://github.com/ApenasGabs/SimpleList/commit/0a794b47a721e5b0452c2aeaa7b5facf56aefaa5))
+
 ## [1.4.0](https://github.com/ApenasGabs/SimpleList/compare/v1.3.0...v1.4.0) (2026-01-25)
 
 ### ✨ Features
