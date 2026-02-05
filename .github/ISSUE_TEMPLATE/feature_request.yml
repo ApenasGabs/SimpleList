@@ -1,0 +1,35 @@
+name: ✨ Solicitar Melhoria
+description: Sugira uma nova funcionalidade ou melhoria
+title: "[Feature]: "
+labels: ["enhancement"]
+type: feature
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado pela sua sugestão!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Qual problema isso resolveria?
+      description: Descreva o problema que esta melhoria resolveria
+      placeholder: Ex. Eu sempre fico frustrado quando...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solução proposta
+      description: Descreva a solução que você gostaria de ver
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: Descreva alternativas que você considerou
+    validations:
+      required: false

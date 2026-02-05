@@ -1,0 +1,68 @@
+name: 🐛 Reportar Bug
+description: Relate um problema encontrado
+title: "[Bug]: "
+labels: ["bug", "triage", "needs-investigation"]
+type: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📝 Obrigado por reportar!
+        Preencha as informações abaixo. Este formulário funciona tanto no computador quanto no celular! 📱💻
+
+  - type: textarea
+    id: description
+    attributes:
+      label: O que aconteceu?
+      description: Descreva o problema que você encontrou
+      placeholder: Ex. Quando eu clico no botão de salvar, nada acontece...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Como reproduzir?
+      description: Passo a passo para reproduzir o problema
+      placeholder: |
+        1. Abra o app
+        2. Clique em...
+        3. Veja o erro
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 📸 Fotos ou Vídeos do Problema
+      description: |
+        Adicione imagens ou vídeos que mostrem o problema
+
+        💡 **Como adicionar:**
+        - 💻 Computador: Arraste arquivos ou cole com Ctrl+V
+        - 📱 Celular: Toque aqui e escolha "Câmera" ou "Galeria"
+
+      placeholder: Toque aqui para adicionar fotos/vídeos
+    validations:
+      required: false
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Onde aconteceu?
+      options:
+        - Celular (Android)
+        - Celular (iOS)
+        - Computador (Windows)
+        - Computador (Linux)
+        - Tablet
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmação
+      options:
+        - label: Eu verifiquei que não existe um bug similar já reportado
+          required: true
